@@ -1,0 +1,13 @@
+enum class EBFGInterpolationTagType {
+    INTERPOLATIONTAG_ACTOR = 0,
+    INTERPOLATIONTAG_COMPONENT = 1,
+    INTERPOLATIONTAG_MAX = 2,
+};
+
+enum TrackedInterpolationType {
+    INTERPOLATE_SKINNED_MESHES = 0,
+    INTERPOLATE_MOVEMENT = 1,
+    INTERPOLATE_NUM = 2,
+    INTERPOLATE_MAX = 3,
+};
+

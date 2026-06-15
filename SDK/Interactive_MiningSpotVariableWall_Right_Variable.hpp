@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_Interactive_MiningSpotVariableWall_Right_Variable_HPP
+#define UE4SS_SDK_Interactive_MiningSpotVariableWall_Right_Variable_HPP
+
+class AInteractive_MiningSpotVariableWall_Right_Variable_C : public AInteractive_MiningSpotVariableWall_C
+{
+}; // Size: 0x978
+
+#endif
