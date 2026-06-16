@@ -3,6 +3,8 @@ set(TARGET g1r-mod)
 add_library(${TARGET} SHARED
     dllmain.cpp
     GamePlayEffect_Proxy.hpp
+    scripts/scripts.cpp
+    scripts/scripts.h
 )
 
 target_include_directories(${TARGET} PRIVATE .)
