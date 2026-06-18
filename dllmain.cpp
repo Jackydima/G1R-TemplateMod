@@ -12,7 +12,7 @@
 using namespace RC;
 using namespace RC::Unreal;
 
-std::pair<int, int> g_HookIds = {};
+static std::pair<int, int> g_HookIds = {};
 bool g_bPatchDone = false;
 
 class G1RMod : public RC::CppUserModBase
@@ -41,32 +41,6 @@ public:
 
     auto on_unreal_init() -> void override
     {
-        /*RC::Unreal::Hook::GlobalCallbackId Id = RC::Unreal::Hook::RegisterStaticConstructObjectPostCallback(
-            [](RC::Unreal::Hook::TCallbackIterationData<UObject *> &data,
-               const RC::Unreal::FStaticConstructObjectParameters &params)
-            {
-                UObject *obj = data.GetOriginalFunctionCallResult();
-
-                if (obj)
-                {
-                    if (obj->GetName().contains(STR("GE_Kdf_Armor_L")))
-                    {
-                        Output::send<LogLevel::Verbose>(STR("Found the \n\n"));
-                        PrintModifiers(obj);
-                    }
-                }
-            },
-            RC::Unreal::Hook::FCallbackOptions{
-                .bOnce = false,
-                .bReadonly = false,
-                .OwnerModName = STR("G1RMod"),
-                .HookName = STR("PostStaticConstructObjectCallback")});
-
-        auto GE_Kdf_Armor_L = UObjectGlobals::StaticFindObject<UObject *>(nullptr, nullptr, STR("/Script/Angelscript.Default__GE_Kdf_Armor_L"));
-        Output::send<LogLevel::Verbose>(STR("Trying instant Patch\n"));
-
-        PrintModifiers(GE_Kdf_Armor_L);*/
-
         Output::send<LogLevel::Verbose>(STR("Starting to load the config...\n"));
         if (!LoadConfig())
         {
@@ -80,7 +54,6 @@ public:
             
             Output::send<LogLevel::Verbose>(STR("HotReloaded Config and Patches\n"));
             ResetItems();
-            LoadConfig();
             PatchItems(); });
     }
 
@@ -95,10 +68,6 @@ public:
                 return;
                             
             PatchItems();
-
-            // Testing Things
-            auto GE_Kdf_Armor_L = UObjectGlobals::StaticFindObject<RC::Unreal::UObject *>(nullptr, nullptr, STR("/Script/Angelscript.Default__GE_Kdf_Armor_L"));
-            PrintModifiers(GE_Kdf_Armor_L);
 
             g_bPatchDone = true;
             UObjectGlobals::UnregisterHook(STR("/Script/Engine.PlayerController:ClientRestart"), g_HookIds); }, nullptr);

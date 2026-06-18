@@ -3,8 +3,16 @@ set(TARGET g1r-mod)
 add_library(${TARGET} SHARED
     dllmain.cpp
     GamePlayEffect_Proxy.hpp
+    WeaponDefinition_Proxy.hpp
+    Shared_Proxy.hpp
     scripts/scripts.cpp
     scripts/scripts.h
+    scripts/AttributePatcherBase.cpp
+    scripts/AttributePatcherBase.h
+    scripts/WeaponAttributePatcher.cpp
+    scripts/WeaponAttributePatcher.h
+    scripts/GEAttributePatcher.cpp
+    scripts/GEAttributePatcher.h
 )
 
 target_include_directories(${TARGET} PRIVATE .)
