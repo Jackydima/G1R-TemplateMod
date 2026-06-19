@@ -3,7 +3,9 @@
 #include <Unreal/UObject.hpp>
 #include <Unreal/UObjectGlobals.hpp>
 #include <Unreal/FieldPath.hpp>
+
 #include "GameplayAbilities_enums.hpp"
+#include "G1R_enums.hpp"
 
 class UGameplayEffect;
 class UGameplayEffectCustomApplicationRequirement;
@@ -240,3 +242,36 @@ struct FGameplayEffectExecutionDefinition
     RC::Unreal::TArray<FConditionalGameplayEffect> ConditionalGameplayEffects;           // 0x0038 (size: 0x10)
 
 }; // Size: 0x48
+
+struct FSpellLevelRange
+{
+    float CastTime;                                                                   // 0x0000 (size: 0x4)
+    float CastManaCost;                                                               // 0x0004 (size: 0x4)
+    float ManaCostSc;                                                                 // 0x0008 (size: 0x4)
+    //TSubclassOf<class UScriptGameplayAbility> m_SpellClass;                           // 0x0010 (size: 0x8)
+    void* m_SpellClass;
+    //TSubclassOf<class USpellConfigLevelData> m_SpellConfigLevelData;                  // 0x0018 (size: 0x8)
+    void* m_SpellConfigLevelData;
+
+}; // Size: 0x20
+
+struct FCameraBehaviour
+{
+    RC::Unreal::FVector m_SocketOffset;                                                           // 0x0000 (size: 0x18)
+    RC::Unreal::FVector m_SocketMinCombatOffset;                                                  // 0x0018 (size: 0x18)
+    float m_ArmLength;                                                                // 0x0030 (size: 0x4)
+    float m_Fov;                                                                      // 0x0034 (size: 0x4)
+    float m_LagSpeed;                                                                 // 0x0038 (size: 0x4)
+    float m_RotationLagSpeed;                                                         // 0x003C (size: 0x4)
+    float m_RotationLagSpeedPitch;                                                    // 0x0040 (size: 0x4)
+    float m_LagMaxDistance;                                                           // 0x0044 (size: 0x4)
+    ECamConditions m_Condition;                                                       // 0x0048 (size: 0x1)
+    bool m_IsActive;                                                                  // 0x0049 (size: 0x1)
+    bool m_IsAim;                                                                     // 0x004A (size: 0x1)
+    float m_SpellPitchLimit;                                                          // 0x004C (size: 0x4)
+    float m_SpellYawLimit;                                                            // 0x0050 (size: 0x4)
+    RC::Unreal::int32 m_CameraPitchId;                                                            // 0x0054 (size: 0x4)
+    float m_PitchLimit;                                                               // 0x0058 (size: 0x4)
+    float m_YawLimit;                                                                 // 0x005C (size: 0x4)
+
+}; // Size: 0x60
