@@ -46,8 +46,8 @@ class UItemDefinition : public UGothicObjectDefinition
     TArray<class UItemEffectDefinition *> m_OnConsumeEffects; // 0x0220 (size: 0x10)
     // TSubclassOf<class UInteractiveObjectDefinition> m_ForcedInteraction;              // 0x0230 (size: 0x8)
     char m_ForcedInteraction[0x8];
-    // TMap<FGameplayAttribute, float> m_RequiredStats;                                  // 0x0238 (size: 0x50)
-    char m_RequiredStats[0x50];
+    TMap<FGameplayAttribute, float> m_RequiredStats;                                  // 0x0238 (size: 0x50)
+    //char m_RequiredStats[0x50];
     /*EInventoryTypes m_TryToStoreFirst;                                                // 0x0288 (size: 0x1)
     TArray<class TSubclassOf<UActionKeywords>> m_ActionsKeywords;                     // 0x0290 (size: 0x10)
     TArray<FGameplayTag> m_ItemStatsTags;                                             // 0x02A0 (size: 0x10)

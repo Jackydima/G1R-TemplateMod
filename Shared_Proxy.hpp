@@ -78,7 +78,16 @@ struct FGameplayAttribute
     RC::Unreal::TFieldPath<RC::Unreal::FProperty> Attribute; // 0x0010 (size: 0x20)
     class UStruct *AttributeOwner;                           // 0x0030 (size: 0x8)
 
+    bool operator==(const FGameplayAttribute &Other) const
+    {
+        return AttributeName == Other.AttributeName;
+    }
 }; // Size: 0x38
+
+inline int GetTypeHash(const FGameplayAttribute &GameplayAttribute)
+{
+    return GetTypeHash(GameplayAttribute.AttributeName);
+}
 
 struct FGameplayEffectAttributeCaptureDefinition
 {
