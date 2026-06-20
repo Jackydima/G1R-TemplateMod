@@ -41,6 +41,8 @@ void WeaponAttributePatcher::ApplyPatchOnItem(const FAttributeConfig &config, UO
         return;
     }
 
+    DamageMapPtr->Empty();
+
     // Apply each modifier from the configuration
     FGameplayTag ftag;
     FString fString;
@@ -48,11 +50,7 @@ void WeaponAttributePatcher::ApplyPatchOnItem(const FAttributeConfig &config, UO
     {
         fString = FString(configModifier.AttributeName.c_str());
         ftag.TagName = FName(*fString);
-        auto dataPtr = DamageMapPtr->Find(ftag);
-        if (dataPtr)
-        {
-            *dataPtr = configModifier.Value;
-        }
+        DamageMapPtr->Emplace(ftag, configModifier.Value);
     }
 }
 
