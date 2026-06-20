@@ -17,11 +17,13 @@ class USpellConfig : public UGothicBaseConfig
     FName m_SpawnLocationSocket;                       // 0x00C0 (size: 0x8)
     FGameplayTag m_SpellCategoryTag;                   // 0x00C8 (size: 0x8)
 }; // Size: 0xD0
+static_assert(sizeof(USpellConfig) == 0xD0, "USpellConfig Size Missmatch");
 
 class USpellContainer : public UItemDefinition
 {
     TSubclassOf<class USpellConfig> m_SpellConfig; // 0x0320 (size: 0x8)
 }; // Size: 0x328
+static_assert(sizeof(USpellContainer) == 0x328, "USpellContainer Size Missmatch");
 
 class URuneSpellContainer : public USpellContainer
 {
@@ -32,3 +34,4 @@ class URuneSpellContainer : public USpellContainer
     int32 RequiredMagicCircleLevel;                                    // 0x0354 (size: 0x4)
     TArray<class TSubclassOf<UWeaponDefinition>> m_WeaponsDefinitions; // 0x0358 (size: 0x10)
 }; // Size: 0x368
+static_assert(sizeof(URuneSpellContainer) == 0x368, "URuneSpellContainer Size Missmatch");

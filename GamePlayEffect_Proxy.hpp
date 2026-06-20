@@ -5,7 +5,7 @@
 
 using namespace RC::Unreal;
 
-// Size is not correct yet (Modifiersis correct and is useable!)
+// Size is not correct yet (Modifiers is correct and is useable!)
 class UGameplayEffect : UObject
 {
 public:
@@ -47,3 +47,4 @@ public:
     RC::Unreal::TArray<FGameplayAbilitySpecDef> GrantedAbilities;                                                           // 0x09F0 (size: 0x10)
     RC::Unreal::TArray<class UGameplayEffectComponent *> GEComponents;                                                      // 0x0A60 (size: 0x10)
 }; // Size: 0xA70
+//static_assert(sizeof(UGameplayEffect) == 0xA70, "UGameplayEffect Size Missmatch");

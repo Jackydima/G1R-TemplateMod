@@ -11,6 +11,7 @@ class UItemEffectDefinition : public UObject
     TMap<FGameplayTag, float> m_Magnitudes;      // 0x0030 (size: 0x50)
     // char buffer[0x50];
 }; // Size: 0x80
+// static_assert(sizeof(UItemEffectDefinition) == 0x80, "UItemEffectDefinition Size Missmatch");
 
 class UGothicObjectDefinition
 {
@@ -46,8 +47,8 @@ class UItemDefinition : public UGothicObjectDefinition
     TArray<class UItemEffectDefinition *> m_OnConsumeEffects; // 0x0220 (size: 0x10)
     // TSubclassOf<class UInteractiveObjectDefinition> m_ForcedInteraction;              // 0x0230 (size: 0x8)
     char m_ForcedInteraction[0x8];
-    TMap<FGameplayAttribute, float> m_RequiredStats;                                  // 0x0238 (size: 0x50)
-    //char m_RequiredStats[0x50];
+    TMap<FGameplayAttribute, float> m_RequiredStats; // 0x0238 (size: 0x50)
+    // char m_RequiredStats[0x50];
     /*EInventoryTypes m_TryToStoreFirst;                                                // 0x0288 (size: 0x1)
     TArray<class TSubclassOf<UActionKeywords>> m_ActionsKeywords;                     // 0x0290 (size: 0x10)
     TArray<FGameplayTag> m_ItemStatsTags;                                             // 0x02A0 (size: 0x10)
@@ -62,7 +63,6 @@ class UItemDefinition : public UGothicObjectDefinition
     */
     char buffer3[0x98];
 }; // Size: 0x320
-
 static_assert(sizeof(UItemDefinition) == 0x320, "UItemDefinition Size Missmatch");
 
 class UWeaponDefinition : public UItemDefinition
@@ -78,5 +78,4 @@ class UWeaponDefinition : public UItemDefinition
     // TMap<FGameplayTag, FHitCueData> m_HitCueDataByDamageType;             // 0x03B0 (size: 0x50)
     char m_HitCueDataByDamageType[0x50];
 }; // Size: 0x400
-
 static_assert(sizeof(UWeaponDefinition) == 0x400, "UWeaponDefinition Size Missmatch");
