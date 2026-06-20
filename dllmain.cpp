@@ -6,7 +6,6 @@
 #include <Unreal/Script.hpp>
 #include <Unreal/UObjectGlobals.hpp>
 
-#include "GamePlayEffect_Proxy.hpp"
 #include "scripts/scripts.h"
 
 using namespace RC;

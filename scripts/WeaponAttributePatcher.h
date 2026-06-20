@@ -1,7 +1,6 @@
 #pragma once
 
 #include "AttributePatcherBase.h"
-#include "WeaponDefinition_Proxy.hpp"
 
 class WeaponAttributePatcher : public AttributePatcherBase
 {

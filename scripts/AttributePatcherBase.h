@@ -9,8 +9,8 @@
 #include <filesystem>
 #include <windows.h>
 
-#include "GamePlayEffect_Proxy.hpp"
-#include "WeaponDefinition_Proxy.hpp"
+#include "proxy/GamePlayEffect_Proxy.hpp"
+#include "proxy/WeaponDefinition_Proxy.hpp"
 #include "thirdparty/inicpp.h"
 #include "AttributeConfig.h"
 

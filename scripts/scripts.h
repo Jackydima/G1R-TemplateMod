@@ -10,7 +10,7 @@
 #include <windows.h>
 #include <memory>
 
-#include "GamePlayEffect_Proxy.hpp"
+#include "proxy/GamePlayEffect_Proxy.hpp"
 #include "thirdparty/inicpp.h"
 #include "AttributeConfig.h"
 #include "WeaponAttributePatcher.h"

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "AttributePatcherBase.h"
-#include "GamePlayEffect_Proxy.hpp"
 
 class GEAttributePatcher : public AttributePatcherBase
 {

@@ -1,5 +1,7 @@
 set(TARGET g1r-mod)
 
+project(MyProject LANGUAGES CXX RC)
+
 add_library(${TARGET} SHARED
     dllmain.cpp
     GamePlayEffect_Proxy.hpp
@@ -13,6 +15,8 @@ add_library(${TARGET} SHARED
     scripts/WeaponAttributePatcher.h
     scripts/GEAttributePatcher.cpp
     scripts/GEAttributePatcher.h
+    g1r-mod.rc
+    resource.h
 )
 
 target_include_directories(${TARGET} PRIVATE .)
