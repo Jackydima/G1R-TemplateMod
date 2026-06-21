@@ -4,9 +4,9 @@ project(MyProject LANGUAGES CXX RC)
 
 add_library(${TARGET} SHARED
     dllmain.cpp
-    GamePlayEffect_Proxy.hpp
-    WeaponDefinition_Proxy.hpp
-    Shared_Proxy.hpp
+    proxy/GamePlayEffect_Proxy.hpp
+    proxy/WeaponDefinition_Proxy.hpp
+    proxy/Shared_Proxy.hpp
     scripts/scripts.cpp
     scripts/scripts.h
     scripts/AttributePatcherBase.cpp
