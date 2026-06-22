@@ -15,6 +15,7 @@
 #include "AttributeConfig.h"
 #include "WeaponAttributePatcher.h"
 #include "GEAttributePatcher.h"
+#include "SpellAttributePatcher.h"
 
 using namespace RC;
 using namespace RC::Unreal;

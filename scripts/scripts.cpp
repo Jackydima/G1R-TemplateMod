@@ -21,6 +21,9 @@ bool LoadConfig()
     g_Patcher.push_back(
         std::make_unique<GEAttributePatcher>());
 
+    g_Patcher.push_back(
+        std::make_unique<SpellAttributePatcher>());
+
     for (auto &patcher : g_Patcher)
     {
         patcher->LoadConfig();

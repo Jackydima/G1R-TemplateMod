@@ -6,6 +6,7 @@ add_library(${TARGET} SHARED
     dllmain.cpp
     proxy/GamePlayEffect_Proxy.hpp
     proxy/WeaponDefinition_Proxy.hpp
+    proxy/Spell_Proxy.hpp
     proxy/Shared_Proxy.hpp
     scripts/scripts.cpp
     scripts/scripts.h
@@ -15,6 +16,8 @@ add_library(${TARGET} SHARED
     scripts/WeaponAttributePatcher.h
     scripts/GEAttributePatcher.cpp
     scripts/GEAttributePatcher.h
+    scripts/SpellAttributePatcher.h
+    scripts/SpellAttributePatcher.cpp
     g1r-mod.rc
     resource.h
 )

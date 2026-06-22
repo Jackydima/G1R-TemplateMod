@@ -11,6 +11,7 @@
 
 #include "proxy/GamePlayEffect_Proxy.hpp"
 #include "proxy/WeaponDefinition_Proxy.hpp"
+#include "proxy/Spell_Proxy.hpp"
 #include "thirdparty/inicpp.h"
 #include "AttributeConfig.h"
 

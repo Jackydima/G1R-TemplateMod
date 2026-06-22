@@ -14,7 +14,6 @@ class UGameplayEffectCustomApplicationRequirement;
 struct FGameplayTag
 {
     RC::Unreal::FName TagName; // 0x0000 (size: 0x8)
-    // RC::Unreal::FString TagName;
 
     bool operator==(const FGameplayTag &Other) const
     {
@@ -275,3 +274,24 @@ struct FCameraBehaviour
     float m_YawLimit;                                                                 // 0x005C (size: 0x4)
 
 }; // Size: 0x60
+
+struct FAimingAssistance
+{
+    bool m_enableAimingAssistance;                                                    // 0x0000 (size: 0x1)
+    float m_MaxTurnAngle;                                                             // 0x0004 (size: 0x4)
+    float m_MaxDistance;                                                              // 0x0008 (size: 0x4)
+    float m_MinDistance;                                                              // 0x000C (size: 0x4)
+    float m_DetectionRadius;                                                          // 0x0010 (size: 0x4)
+
+}; // Size: 0x14
+
+struct FDamageByMagicCircle
+{
+    FGameplayTag m_CircleTag;                                                         // 0x0000 (size: 0x8)
+    float m_Damage;                                                                   // 0x0008 (size: 0x4)
+}; // Size: 0xC
+
+struct FDamageProgressionMagicCircle
+{
+    RC::Unreal::TArray<FDamageByMagicCircle> m_DamageByMagicCircle;                               // 0x0000 (size: 0x10)
+}; // Size: 0x10
