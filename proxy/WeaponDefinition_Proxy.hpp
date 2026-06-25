@@ -26,6 +26,7 @@ class UGothicObjectDefinition
 
 class UItemDefinition : public UGothicObjectDefinition
 {
+public:
     int32 m_Value;    // 0x0080 (size: 0x4)
     int32 m_MaxStack; // 0x0084 (size: 0x4)
     float m_Buoyancy; // 0x0088 (size: 0x4)
@@ -67,13 +68,12 @@ static_assert(sizeof(UItemDefinition) == 0x320, "UItemDefinition Size Missmatch"
 
 class UWeaponDefinition : public UItemDefinition
 {
-    public:
-    // TMap<FString, float> m_DamageBase;                                           // 0x0320 (size: 0x50)
-    TMap<FGameplayTag, float> m_DamageBase;
+public:
+    TMap<FGameplayTag, float> m_DamageBase;         // 0x0320 (size: 0x50)
     float m_SuperArmorDamageBase;                   // 0x0370 (size: 0x4)
     TSubclassOf<class UGameplayEffect> m_HitEffect; // 0x0378 (size: 0x8)
-    FGameplayTagContainer m_CriticalWeakSpotsTags;                                    // 0x0380 (size: 0x20)
-    //char buffer1[0x20];
+    FGameplayTagContainer m_CriticalWeakSpotsTags;  // 0x0380 (size: 0x20)
+    // char buffer1[0x20];
     float m_CriticalMultiplier;                       // 0x03A0 (size: 0x4)
     TSubclassOf<class UGameplayEffect> m_DeathEffect; // 0x03A8 (size: 0x8)
     // TMap<FGameplayTag, FHitCueData> m_HitCueDataByDamageType;             // 0x03B0 (size: 0x50)
