@@ -6,6 +6,7 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
     USpellProjectileDefinition *spellProjectile = reinterpret_cast<USpellProjectileDefinition *>(objItem);
 
     bool updatedDamage = false;
+    bool updatedCircle = false;
 
     for (auto &configModifier : config.AttributeData)
     {
@@ -62,11 +63,12 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
 
         if (configModifier.AttributeType == L"Damage.")
         {
-            for (auto& entry: spellProjectile->m_DamageBase)
+            for (auto &entry : spellProjectile->m_DamageBase)
             {
                 FGameplayTag tag = entry.Key;
                 Output::send<LogLevel::Verbose>(STR("Spell {}: Tag {} - Value {}\n"), config.ItemName, tag.TagName.ToString(), entry.Value);
             }
+
             if (!updatedDamage)
             {
                 spellProjectile->m_DamageBase.Empty();
@@ -77,6 +79,48 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
             FString fString = FString(configModifier.AttributeName.c_str());
             ftag.TagName = FName(*fString);
             spellProjectile->m_DamageBase.Emplace(ftag, configModifier.Value);
+        }
+
+        if (configModifier.AttributeType == L"DamageCircle.")
+        {
+            for (auto &entry : spellProjectile->m_DamageMagicCircleProgression)
+            {
+                FGameplayTag tag = entry.Key;
+                FDamageProgressionMagicCircle dPMC = entry.Value;
+
+                for (auto &Item : dPMC.m_DamageByMagicCircle)
+                {
+                    Output::send<LogLevel::Verbose>(STR("Spell {}: m_DamageMagicCircleProgression Key {}, Tag {} - Value {}\n"), config.ItemName,
+                    tag.TagName.ToString(), Item.m_CircleTag.TagName.ToString(), Item.m_Damage);
+                }
+            }
+
+            if (!updatedCircle)
+            {
+                spellProjectile->m_DamageMagicCircleProgression.Empty();
+                FDamageProgressionMagicCircle dPMC;
+                TArray<FGameplayTag> tagArray;
+                spellProjectile->m_DamageBase.GenerateKeyArray(tagArray);
+                if (!tagArray.IsValidIndex(0))
+                    continue;
+                spellProjectile->m_DamageMagicCircleProgression.Emplace(tagArray[0], dPMC); // Only one Tag should be included in the damage!
+                updatedDamage = true;
+            }
+
+            TArray<FGameplayTag> tagArray;
+            spellProjectile->m_DamageBase.GenerateKeyArray(tagArray);
+            if (!tagArray.IsValidIndex(0))
+                continue;
+
+            FDamageByMagicCircle damageByMC;
+            FGameplayTag ftag;
+            FString fString = FString(configModifier.AttributeName.c_str());
+            ftag.TagName = FName(*fString);
+            damageByMC.m_CircleTag = ftag;
+            damageByMC.m_Damage = configModifier.Value;
+        
+            FDamageProgressionMagicCircle &dPMC = spellProjectile->m_DamageMagicCircleProgression[tagArray[0]];
+            dPMC.m_DamageByMagicCircle.Add(damageByMC);
         }
     }
 }
