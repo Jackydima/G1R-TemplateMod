@@ -57,17 +57,17 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
             }
         }
 
-        if (configModifier.AttributeType == L"Requirements.")
+        if (configModifier.AttributeType == L"Requirement.")
         {
         }
 
         if (configModifier.AttributeType == L"Damage.")
         {
-            for (auto &entry : spellProjectile->m_DamageBase)
+            /*for (auto &entry : spellProjectile->m_DamageBase)
             {
                 FGameplayTag tag = entry.Key;
                 Output::send<LogLevel::Verbose>(STR("Spell {}: Tag {} - Value {}\n"), config.ItemName, tag.TagName.ToString(), entry.Value);
-            }
+            }*/
 
             if (!updatedDamage)
             {
@@ -83,7 +83,7 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
 
         if (configModifier.AttributeType == L"DamageCircle.")
         {
-            for (auto &entry : spellProjectile->m_DamageMagicCircleProgression)
+            /*for (auto &entry : spellProjectile->m_DamageMagicCircleProgression)
             {
                 FGameplayTag tag = entry.Key;
                 FDamageProgressionMagicCircle dPMC = entry.Value;
@@ -93,7 +93,7 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
                     Output::send<LogLevel::Verbose>(STR("Spell {}: m_DamageMagicCircleProgression Key {}, Tag {} - Value {}\n"), config.ItemName,
                     tag.TagName.ToString(), Item.m_CircleTag.TagName.ToString(), Item.m_Damage);
                 }
-            }
+            }*/
 
             if (!updatedCircle)
             {
@@ -110,6 +110,9 @@ void SpellAttributePatcher::ApplySpellDefinition(const FAttributeConfig &config,
             TArray<FGameplayTag> tagArray;
             spellProjectile->m_DamageBase.GenerateKeyArray(tagArray);
             if (!tagArray.IsValidIndex(0))
+                continue;
+
+            if (!spellProjectile->m_DamageMagicCircleProgression.Contains(tagArray[0]))
                 continue;
 
             FDamageByMagicCircle damageByMC;
@@ -133,7 +136,7 @@ void SpellAttributePatcher::ApplySpellConfig(const FAttributeConfig &config, UOb
 
     for (auto &configModifier : config.AttributeData)
     {
-        if (configModifier.AttributeType == L"Requirements.")
+        if (configModifier.AttributeType == L"Requirement.")
         {
             int index = -1;
             size_t indexStart = configModifier.AttributeName.find(L"[") + 1;
@@ -224,5 +227,108 @@ void SpellAttributePatcher::GetDefaultAttributes(std::wstring itemName, UObject 
         return;
     }
 
+    FAttributeConfig config;
+    config.ItemName = itemName;
+    FAttributeData currentAttribute;
+
     // TODO: Test with class structure only (no reflection)
+    if (config.ItemName.contains(L"Definition"))
+    {
+        USpellProjectileDefinition *spellProjectile = reinterpret_cast<USpellProjectileDefinition *>(obj);
+
+        currentAttribute.AttributeType = L"Damage.";
+        for (auto &damageEntry: spellProjectile->m_DamageBase)
+        {
+            FGameplayTag &tag = damageEntry.Key;
+            currentAttribute.AttributeName = std::wstring(tag.TagName.ToString());
+            currentAttribute.Value = damageEntry.Value;
+            config.AttributeData.push_back(currentAttribute);
+        }
+
+        currentAttribute.AttributeType = L"DamageCircle.";
+
+        TArray<FGameplayTag> tagArray;
+        spellProjectile->m_DamageBase.GenerateKeyArray(tagArray);
+        if (!tagArray.IsValidIndex(0))
+            return;
+
+        if (spellProjectile->m_DamageMagicCircleProgression.Contains(tagArray[0]))
+        {
+            auto &DamageMagicCircleProgression = spellProjectile->m_DamageMagicCircleProgression[tagArray[0]];
+            for (auto& entry : DamageMagicCircleProgression.m_DamageByMagicCircle)
+            {
+                currentAttribute.AttributeName = std::wstring(entry.m_CircleTag.TagName.ToString());
+                currentAttribute.Value = entry.m_Damage;
+                config.AttributeData.push_back(currentAttribute);
+            }
+        }
+
+        if (itemName == L"FireRainDefinition")
+        {
+            UFireRainDefinition *fireRainDef = reinterpret_cast<UFireRainDefinition *>(obj);
+            currentAttribute.AttributeType = L"Requirement.";
+
+            currentAttribute.AttributeName = L"m_StormRadius";
+            currentAttribute.Value = static_cast<float>(fireRainDef->m_StormRadius);
+            config.AttributeData.push_back(currentAttribute);
+
+            currentAttribute.AttributeName = L"m_StormHeight";
+            currentAttribute.Value = static_cast<float>(fireRainDef->m_StormHeight);
+            config.AttributeData.push_back(currentAttribute);
+
+            currentAttribute.AttributeName = L"m_Probability";
+            currentAttribute.Value = static_cast<float>(fireRainDef->m_Probability);
+            config.AttributeData.push_back(currentAttribute);
+
+            currentAttribute.AttributeName = L"m_Min";
+            currentAttribute.Value = static_cast<float>(fireRainDef->m_Min);
+            config.AttributeData.push_back(currentAttribute);
+
+            currentAttribute.AttributeName = L"m_Max";
+            currentAttribute.Value = static_cast<float>(fireRainDef->m_Max);
+            config.AttributeData.push_back(currentAttribute);
+
+            currentAttribute.AttributeName = L"m_Forced";
+            currentAttribute.Value = static_cast<float>(fireRainDef->m_Forced);
+            config.AttributeData.push_back(currentAttribute);
+        }
+
+        this->m_Default_AttributeConfigMap.emplace(itemName, config);
+    }
+
+    else if (config.ItemName.contains(L"SpellConfig"))
+    {
+        USpellConfig *spellConfig = reinterpret_cast<USpellConfig *>(obj);
+        auto &spellLevels = spellConfig->m_SpellLevels;
+
+        currentAttribute.AttributeType = L"Requirement.";
+        int i = 0;
+        for (auto &SL: spellLevels)
+        {
+            std::wstring attributeNameBase = L"[";
+            attributeNameBase += std::to_wstring(i);
+            attributeNameBase += L"].";
+
+            std::wstring attributeName = attributeNameBase + L"CastTime";
+            currentAttribute.AttributeName = attributeName;
+            currentAttribute.Value = SL.CastTime;
+            Output::send<LogLevel::Verbose>(STR("SpellConfig for {}: Default is {}[{}] -> {}\n"), itemName, attributeName, i, currentAttribute.Value);
+            config.AttributeData.push_back(currentAttribute);
+
+            attributeName = attributeNameBase + L"CastManaCost";
+            currentAttribute.AttributeName = attributeName;
+            currentAttribute.Value = SL.CastManaCost;
+            Output::send<LogLevel::Verbose>(STR("SpellConfig for {}: Default is {}[{}] -> {}\n"), itemName, attributeName, i, currentAttribute.Value);
+            config.AttributeData.push_back(currentAttribute);
+
+            attributeName = attributeNameBase + L"ManaCostSc";
+            currentAttribute.AttributeName = attributeName;
+            currentAttribute.Value = SL.ManaCostSc;
+            Output::send<LogLevel::Verbose>(STR("SpellConfig for {}: Default is {}[{}] -> {}\n"), itemName, attributeName, i, currentAttribute.Value);
+            config.AttributeData.push_back(currentAttribute);
+            i++;
+        }
+
+        this->m_Default_AttributeConfigMap.emplace(itemName, config);
+    }
 }
