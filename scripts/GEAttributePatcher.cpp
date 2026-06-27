@@ -57,12 +57,12 @@ void GEAttributePatcher::ApplyPatchOnItem(const FAttributeConfig &config, UObjec
                 float oldValue = effectModifier.ModifierMagnitude.ScalableFloatMagnitude.Value;
                 effectModifier.ModifierMagnitude.ScalableFloatMagnitude.Value = configModifier.Value;
 
-                Output::send<LogLevel::Verbose>(
+                /*Output::send<LogLevel::Verbose>(
                     STR("Updated {}.{}: {} -> {}\n"),
                     config.ItemName,
                     configModifier.AttributeName,
                     oldValue,
-                    configModifier.Value);
+                    configModifier.Value);*/
                 break;
             }
         }
@@ -104,7 +104,7 @@ void GEAttributePatcher::GetDefaultAttributes(std::wstring itemName, UObject *ob
         auto &Name = Entry.Attribute.AttributeName;
         currentAttribute = FAttributeData(std::wstring(Name.GetCharArray().GetData()), std::wstring(L"Modifier."), Entry.ModifierMagnitude.ScalableFloatMagnitude.Value);
         geConfig.AttributeData.push_back(currentAttribute);
-        Output::send<LogLevel::Verbose>(STR("[{}]Added Default Attribute {}: {}\n"), itemName, StringType(Name.GetCharArray().GetData()), Entry.ModifierMagnitude.ScalableFloatMagnitude.Value);
+        //Output::send<LogLevel::Verbose>(STR("[{}]Added Default Attribute {}: {}\n"), itemName, StringType(Name.GetCharArray().GetData()), Entry.ModifierMagnitude.ScalableFloatMagnitude.Value);
     }
 
     this->m_Default_AttributeConfigMap[itemName] = geConfig;

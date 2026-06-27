@@ -18,13 +18,13 @@ void WeaponAttributePatcher::ApplyRequirements(const FAttributeData &configData,
     if (configData.AttributeName == L"Strength")
     {
         weapon->m_RequiredStats.Emplace(this->m_STRAttribute, configData.Value);
-        Output::send<LogLevel::Verbose>(STR("[WeaponAttributePatcher] Updated Req for {}: Strength -> {}\n"), itemName, configData.Value);
+        //Output::send<LogLevel::Verbose>(STR("[WeaponAttributePatcher] Updated Req for {}: Strength -> {}\n"), itemName, configData.Value);
     }
 
     if (configData.AttributeName == L"Dexterity")
     {
         weapon->m_RequiredStats.Emplace(this->m_DEXAttribute, configData.Value);
-        Output::send<LogLevel::Verbose>(STR("[WeaponAttributePatcher] Updated Req for {}: Dexterity -> {}\n"), itemName, configData.Value);
+        //Output::send<LogLevel::Verbose>(STR("[WeaponAttributePatcher] Updated Req for {}: Dexterity -> {}\n"), itemName, configData.Value);
     }
     /*for (auto &entry : *RequiredStatsMapPtr)
     {
@@ -58,7 +58,7 @@ void WeaponAttributePatcher::ApplyDamageValues(const FAttributeData &configData,
     FString fString;
     fString = FString(configData.AttributeName.c_str());
     ftag.TagName = FName(*fString);
-    Output::send<LogLevel::Verbose>(STR("Item ({}): Damage {} to {}\n"), itemName, configData.AttributeName, configData.Value);
+    //Output::send<LogLevel::Verbose>(STR("Item ({}): Damage {} to {}\n"), itemName, configData.AttributeName, configData.Value);
     weapon->m_DamageBase.Emplace(ftag, configData.Value);
 }
 
@@ -211,7 +211,7 @@ void WeaponAttributePatcher::GetDefaultAttributes(std::wstring itemName, UObject
         currentAttribute.AttributeType = L"Damage.";
         currentAttribute.Value = value;
 
-        Output::send<LogLevel::Verbose>(STR("[{}] -> {} = {}\n"), itemName, currentAttribute.AttributeName, currentAttribute.Value);
+        //Output::send<LogLevel::Verbose>(STR("[{}] -> {} = {}\n"), itemName, currentAttribute.AttributeName, currentAttribute.Value);
 
         config.AttributeData.push_back(currentAttribute);
     }
@@ -224,7 +224,7 @@ void WeaponAttributePatcher::GetDefaultAttributes(std::wstring itemName, UObject
         currentAttribute.AttributeType = L"Requirement.";
         currentAttribute.Value = value;
 
-        Output::send<LogLevel::Verbose>(STR("[{}] -> {} = {}\n"), itemName, currentAttribute.AttributeName, currentAttribute.Value);
+        //Output::send<LogLevel::Verbose>(STR("[{}] -> {} = {}\n"), itemName, currentAttribute.AttributeName, currentAttribute.Value);
 
         config.AttributeData.push_back(currentAttribute);
     }

@@ -50,8 +50,8 @@ bool AttributePatcherBase::LoadConfig()
                     float value = fieldValue.as<float>();
                     itemConfig.AttributeData.emplace_back(std::wstring(attributeName.begin(), attributeName.end()), std::wstring(attributeType.begin(), attributeType.end()), value);
 
-                    Output::send<LogLevel::Verbose>(STR("{}.{} > {} = {}\n"), itemConfig.ItemName,
-                                                    std::wstring(attributeType.begin(), attributeType.end()), std::wstring(attributeName.begin(), attributeName.end()), value);
+                    //Output::send<LogLevel::Verbose>(STR("{}.{} > {} = {}\n"), itemConfig.ItemName,
+                    //                                std::wstring(attributeType.begin(), attributeType.end()), std::wstring(attributeName.begin(), attributeName.end()), value);
                 }
                 catch (const std::exception)
                 {
